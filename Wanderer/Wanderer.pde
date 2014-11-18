@@ -1,45 +1,44 @@
-float locx;
-float locy;
-float velx;
-float vely;
-float accy;
-float accx;
-int sz;
+PVector loc;
+PVector vel;
+PVector acc;
+int sz=50;
 
 void setup(){
-  background(0);
+  
   colorMode(HSB, 360, 100,100,100);
   size(displayWidth,displayHeight);
-  locx=width/2;
-  locy=height/4;
-  velx=0;
-  vely=4;
-  accx=0;
-  accy=1;
+  loc= new PVector(width/2, height/2);
+  vel= new PVector(0,0);
+  acc= new PVector(random(-.1,.1), random(-.1,.1));
   sz=50;
 
 }
 
 void draw(){
+  acc.set(random(-.1,.1), random(-.1,.1));
   fill(frameCount%360, 100,100, 100);
-  ellipse(locx, locy, sz,sz);
-  velx+= accx;
-  vely+=accy;
-  locx+=velx;
-  locy+=vely;
+  stroke(frameCount%360, 100,100, 100);
+  vel.add(acc);
+  loc.add(vel);
+  vel.limit(5);
   
-  if(locx+sz/2<0){
-    locx=width+sz/2;
+  ellipse(loc.x, loc.y, sz,sz);
+  
+  
+  if(loc.x+sz/2<0){
+    loc.x=width+sz/2;
   }
-  if (locx-sz/2>0){
-    locx=width-sz/2;
+  if (loc.x-sz/2>width){
+    loc.x=-sz/2;
   }
-  if (locy+sz/2<0){
-   locy=height+sz/2;
+  if (loc.y+sz/2<0){
+   loc.y=height+sz/2;
   }
-  if (locy-sz/2>0){
-    locy=height-sz/2;
+  if (loc.y-sz/2>height){
+    loc.y=-sz/2;
   }
-}
+
+  }
+
   
 
