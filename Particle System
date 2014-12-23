@@ -1,0 +1,59 @@
+ArrayList<Particle> allMyParticles = new ArrayList<Particle>();
+PImage Sparkler;
+
+void setup() {
+  Sparkler= loadImage("sparklystick.jpg");
+  size(Sparkler.width, Sparkler.height);
+  noStroke();
+}
+
+void draw() {
+
+  if (mousePressed) {
+    allMyParticles.add(new Particle());
+  }
+  background(Sparkler);
+  for (int i = allMyParticles.size ()-1; i >= 0; i--) {
+    Particle currentParticle = allMyParticles.get(i);
+    currentParticle.display();
+    currentParticle.move();
+    if (currentParticle.isDead()) {
+      allMyParticles.remove(i);
+    }
+  }
+}
+
+class Particle {
+  PVector vel, acc;
+  float sz;
+  ArrayList<loc> locs = new ArrayList<loc>();
+
+  Particle() {
+    locs(i) = new PVector(350, height*.4);
+    vel = new PVector(random(-3, 3), random(-4, -2));
+    acc = new PVector(0, .1);
+    sz = 5;
+  }
+
+  void move() {
+    vel.add(acc);
+    loc.add(vel);
+    for (int i = 0; i < locs.length-1; i++) {
+      locs[i].set(locs[i+1]);
+    }
+  }
+
+  void display() {
+    for (int i = locs.length-1; i >= 0; i--) {
+      ellipse(locs[i].x, locs[i].y, i/4, i/4);
+    }
+  }
+
+  boolean isDead() {
+    if (loc.y -sz/2 > height) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
